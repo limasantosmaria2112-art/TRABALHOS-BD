@@ -17,7 +17,6 @@ INSERT INTO alunos (nome, idade, nota1, nota2) VALUES
 ('Daniela Lima', 20, 9.0, 9.5),
 ('Eduardo Santos', 22, 6.0, 5.5);
 
--- Alterando o delimitador para criação de blocos complexos no MySQL
 DELIMITER $$
 
 -- ============================================================================
@@ -70,7 +69,6 @@ END$$
 -- EXERCÍCIO 5: Integração Function e Procedure
 -- ============================================================================
 
--- 5.1 Function auxiliar para calcular média
 CREATE FUNCTION calcular_media(n1 DECIMAL(4,2), n2 DECIMAL(4,2)) 
 RETURNS DECIMAL(4,2)
 DETERMINISTIC
@@ -78,7 +76,6 @@ BEGIN
     RETURN (n1 + n2) / 2;
 END$$
 
--- 5.2 Procedure que consome as funções criadas anteriormente
 CREATE PROCEDURE mostrar_situacao(IN aluno_id INT)
 BEGIN
     SELECT 
@@ -91,5 +88,4 @@ BEGIN
     WHERE id = aluno_id;
 END$$
 
--- Restaurando o delimitador padrão
 DELIMITER ;

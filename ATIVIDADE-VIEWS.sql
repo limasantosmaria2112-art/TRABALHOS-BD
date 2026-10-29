@@ -2,7 +2,6 @@
 -- EXERCÍCIO 1: Clientes por Estado
 -- ============================================================================
 
--- 1. Criação da tabela
 CREATE TABLE clientes (
     id INT PRIMARY KEY,
     nome VARCHAR(100),
@@ -10,7 +9,6 @@ CREATE TABLE clientes (
     estado CHAR(2)
 );
 
--- Inserção de pelo menos 5 registros
 INSERT INTO clientes (id, nome, cidade, estado) VALUES
 (1, 'Carlos Silva', 'Curitiba', 'PR'),
 (2, 'Ana Souza', 'Londrina', 'PR'),
@@ -18,7 +16,6 @@ INSERT INTO clientes (id, nome, cidade, estado) VALUES
 (4, 'Juliana Lima', 'Maringá', 'PR'),
 (5, 'Ricardo Alves', 'Rio de Janeiro', 'RJ');
 
--- 1.1 Criação da VIEW vw_clientes_pr
 CREATE VIEW vw_clientes_pr AS
 SELECT id, nome, cidade
 FROM clientes
@@ -29,8 +26,6 @@ WHERE estado = 'PR';
 -- EXERCÍCIO 2: Relacionamento Clientes e Pedidos
 -- ============================================================================
 
--- 2. Criação da tabela de pedidos (a tabela clientes já existe do ex 1, mas usaremos novos ids se necessário)
--- Para manter o script limpo e funcional, vamos criar tabelas específicas para este contexto.
 CREATE TABLE ex2_clientes (
     id INT PRIMARY KEY,
     nome VARCHAR(100)
@@ -44,7 +39,6 @@ CREATE TABLE ex2_pedidos (
     FOREIGN KEY (cliente_id) REFERENCES ex2_clientes(id)
 );
 
--- Inserção de pelo menos 5 registros em cada tabela
 INSERT INTO ex2_clientes (id, nome) VALUES
 (1, 'Mariana Costa'),
 (2, 'Lucas Oliveira'),
@@ -59,7 +53,6 @@ INSERT INTO ex2_pedidos (id, cliente_id, data_pedido, valor) VALUES
 (104, 4, '2026-10-04', 450.00),
 (105, 5, '2026-10-05', 120.90);
 
--- 2.1 Criação da VIEW vw_pedidos_clientes
 CREATE VIEW vw_pedidos_clientes AS
 SELECT 
     c.nome AS nome_cliente,
@@ -73,7 +66,6 @@ INNER JOIN ex2_clientes c ON p.cliente_id = c.id;
 -- EXERCÍCIO 3: Cálculo de Valor em Estoque
 -- ============================================================================
 
--- 3. Criação da tabela produtos
 CREATE TABLE produtos (
     id INT PRIMARY KEY,
     nome VARCHAR(100),
@@ -81,7 +73,6 @@ CREATE TABLE produtos (
     estoque INT
 );
 
--- Inserção de pelo menos 5 registros
 INSERT INTO produtos (id, nome, preco, estoque) VALUES
 (1, 'Notebook Pro', 4500.00, 10),
 (2, 'Mouse Sem Fio', 120.00, 50),
@@ -89,7 +80,6 @@ INSERT INTO produtos (id, nome, preco, estoque) VALUES
 (4, 'Monitor 24h', 1100.00, 15),
 (5, 'Headset Gamer', 280.00, 30);
 
--- 3.1 Criação da VIEW vw_valor_estoque
 CREATE VIEW vw_valor_estoque AS
 SELECT 
     nome AS nome_produto,
@@ -103,7 +93,6 @@ FROM produtos;
 -- EXERCÍCIO 4: Total de Pedidos por Cliente (Agrupamento)
 -- ============================================================================
 
--- 4. Criação das tabelas para o cenário de 10 pedidos distribuídos
 CREATE TABLE ex4_clientes (
     id INT PRIMARY KEY,
     nome VARCHAR(100)
@@ -116,13 +105,11 @@ CREATE TABLE ex4_pedidos (
     FOREIGN KEY (cliente_id) REFERENCES ex4_clientes(id)
 );
 
--- Inserindo clientes
 INSERT INTO ex4_clientes (id, nome) VALUES
 (1, 'André Souza'),
 (2, 'Paula Tejeda'),
 (3, 'Marcos Vinicius');
 
--- Inserindo pelo menos 10 pedidos distribuídos entre os clientes acima
 INSERT INTO ex4_pedidos (id, cliente_id, valor) VALUES
 (1, 1, 100.00),
 (2, 1, 50.00),
@@ -135,7 +122,6 @@ INSERT INTO ex4_pedidos (id, cliente_id, valor) VALUES
 (9, 3, 150.00),
 (10, 2, 90.00);
 
--- Criação da VIEW vw_total_clientes
 CREATE VIEW vw_total_clientes AS
 SELECT 
     c.nome AS nome_cliente,
@@ -150,7 +136,6 @@ GROUP BY c.id, c.nome;
 -- EXERCÍCIO 5: Desempenho de Vendedores (Relatório Completo)
 -- ============================================================================
 
--- 5. Criação das tabelas vendedores e vendas
 CREATE TABLE vendedores (
     id INT PRIMARY KEY,
     nome VARCHAR(100)
@@ -163,13 +148,11 @@ CREATE TABLE vendas (
     FOREIGN KEY (vendedor_id) REFERENCES vendedores(id)
 );
 
--- Inserindo vendedores
 INSERT INTO vendedores (id, nome) VALUES
 (1, 'Carlos Alberto'),
 (2, 'Patricia Silva'),
 (3, 'Renato Augusto');
 
--- Inserindo pelo menos 10 vendas distribuídas
 INSERT INTO vendas (id, vendedor_id, valor) VALUES
 (1, 1, 1500.00),
 (2, 1, 2300.00),
@@ -182,7 +165,6 @@ INSERT INTO vendas (id, vendedor_id, valor) VALUES
 (9, 3, 2200.00),
 (10, 2, 500.00);
 
--- 5.1 Criação da VIEW vw_desempenho_vendedores
 CREATE VIEW vw_desempenho_vendedores AS
 SELECT 
     v.nome AS nome_vendedor,
